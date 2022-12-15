@@ -1,7 +1,18 @@
 public class Week6CatSeakmeng extends Week6PetSeakmeng{
 
-    public Week6CatSeakmeng(String name, String type) {
+    private String coatColor;
+
+    public Week6CatSeakmeng(String name, String type, String coatColor) {
         super(name, type);
+        this.coatColor = coatColor;
+    }
+
+    public String getCoatColor() {
+        return this.coatColor;
+    }
+
+    public void setCoatColor(String coatColor) {
+        this.coatColor = coatColor;
     }
 
     @Override
@@ -9,6 +20,8 @@ public class Week6CatSeakmeng extends Week6PetSeakmeng{
         return "{" +
         " name='" + getName() + "'" +
         ", Override toString Week6CatSeakmeng type='" + getType() + "'" +
+        ", coatColor='" + getCoatColor() + "'" +
         "}";
     }
+
 }

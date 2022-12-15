@@ -15,12 +15,16 @@ public class Week6AssignmentSeakmeng {
 
             System.out.print("Enter your pet type: ");
             String petType = scanner.next();
-            
+
             if (petType.toLowerCase().equals("cat")) {
-                Week6PetSeakmeng cat = new Week6CatSeakmeng(petName, petType);
+                System.out.print("Enter your " + petType + "'s coat color: " );
+                String coatColor = scanner.next();
+                Week6PetSeakmeng cat = new Week6CatSeakmeng(petName, petType, coatColor);
                 getList.add(cat);
             } else if (petType.toLowerCase().equals("dog")) {
-                Week6PetSeakmeng dog = new Week6DogSeakmeng(petName, petType);
+                System.out.print("Enter your " + petType + "'s weight: " );
+                Double dogWeight = Double.parseDouble(scanner.next());
+                Week6PetSeakmeng dog = new Week6DogSeakmeng(petName, petType, dogWeight);
                 getList.add(dog);
             }
         }
