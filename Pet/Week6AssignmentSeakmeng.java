@@ -32,6 +32,8 @@ public class Week6AssignmentSeakmeng {
         System.out.println("\nAll pet types and name");
 
         for (Week6PetSeakmeng object : getList) {
+            // call object like this is the same as object.toString()
+            // System.out.println(object);
             System.out.println(object.toString());
         }
         
