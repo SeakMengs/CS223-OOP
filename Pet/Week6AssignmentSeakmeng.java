@@ -16,25 +16,27 @@ public class Week6AssignmentSeakmeng {
             System.out.print("Enter your pet type: ");
             String petType = scanner.next();
 
-            if (petType.toLowerCase().equals("cat")) {
-                System.out.print("Enter your " + petType + "'s coat color: " );
+            if (petType.toLowerCase().equals("cat") || petType.toLowerCase().equals("c")) {
+                System.out.print("Enter your cat's coat color: " );
                 String coatColor = scanner.next();
                 Week6PetSeakmeng cat = new Week6CatSeakmeng(petName, petType, coatColor);
                 getList.add(cat);
-            } else if (petType.toLowerCase().equals("dog")) {
-                System.out.print("Enter your " + petType + "'s weight: " );
+            } else if (petType.toLowerCase().equals("dog") || petType.toLowerCase().equals("d")) {
+                System.out.print("Enter your dog's weight: " );
                 Double dogWeight = Double.parseDouble(scanner.next());
                 Week6PetSeakmeng dog = new Week6DogSeakmeng(petName, petType, dogWeight);
                 getList.add(dog);
             }
         }
 
-        System.out.println("\nAll pet types and name");
+        System.out.println("\nAll pet type and name");
 
+        int i = 1;
         for (Week6PetSeakmeng object : getList) {
             // call object like this is the same as object.toString()
             // System.out.println(object);
-            System.out.println(object.toString());
+            System.out.println(i + "." + object.toString());
+            i++;
         }
         
         scanner.close();

@@ -17,10 +17,6 @@ public class Week6DogSeakmeng extends Week6PetSeakmeng {
 
     @Override
     public String toString() {
-        return "{" +
-        " name='" + getName() + "'" +
-        ", Override toString Week6DogSeakmeng type='" + getType() + "'" +
-        ", weight='" + getWeight() + "'" +
-        "}";
+        return " name= '" + getName() + "' type= 'dog' weight= '" + getWeight() + "' from Week6DogSeakmeng toString() function";
     }
 }
