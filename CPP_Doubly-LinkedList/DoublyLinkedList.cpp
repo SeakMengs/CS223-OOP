@@ -43,7 +43,8 @@ class Double_node {
     // Destructor is a member function that is invoked automatically when the
     // object goes out of scope or is explicitly destroyed by a call to delete.
     ~Double_node() {
-        // delete this;
+        this->setPrev(nullptr);
+        this->setNext(nullptr);
     }
 };
 
@@ -87,7 +88,7 @@ class Double_list {
     // Set list_size to the input list_size
     void set_size(int list_size) { this->list_size = list_size; }
 
-    // return size list
+    // return size list (optional)
     int return_size() {
         Double_node<T> *temp = this->list_head;
         int count = 0;
@@ -293,9 +294,7 @@ class Double_list {
     }
 
     // Copy the argument list to this list
-    Double_list &operator=(const Double_list &rhs) {
-        
-    }
+    Double_list &operator=(const Double_list &rhs) {}
 
     // Destructor is a member function that is invoked automatically when the
     // object goes out of scope or is explicitly destroyed by a call to delete .
@@ -304,7 +303,8 @@ class Double_list {
         Double_node<T> *temp = this->list_head;
         while (temp != nullptr) {
             Double_node<T> *temp2 = temp->getNext();
-            delete temp;
+            // delete temp;
+            temp->~Double_node();
             temp = temp2;
         }
         // A message to show that the function has been used
