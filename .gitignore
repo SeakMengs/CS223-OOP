@@ -1,2 +1,5 @@
 *.class
 !spec*.class
+
+*.exe
+!spec*.exe
