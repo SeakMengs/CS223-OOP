@@ -294,7 +294,10 @@ class Double_list {
     }
 
     // Copy the argument list to this list
-    Double_list &operator=(const Double_list &rhs) {}
+    Double_list &operator=(const Double_list &rhs) {
+        Double_list<T> *temp = new Double_list<T>(rhs);
+        return temp;
+    }
 
     // Destructor is a member function that is invoked automatically when the
     // object goes out of scope or is explicitly destroyed by a call to delete .
@@ -420,6 +423,14 @@ int main() {
     cout << "print dl list after dl3 push_back(77): ";
     dl->print_list();
     // -----------------------------------------------------
+    
+    // operator =
+    cout << "\nTest operator = " << endl;
+    Double_list<int> *dl4 = dl;
+    cout << "print dl4 list after operator = : ";
+    dl4->print_list();
+    cout << "print dl list after operator = : ";
+    dl->print_list();
 
     // Double_list Destructor
     cout << endl;
