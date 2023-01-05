@@ -1,4 +1,4 @@
-// Name: Seakmeng Hor
+// Author: Seakmeng Hor, Sopheaknita Chea, Bunlong Prak
 // Course: cs201 section 1
 
 #include <iostream>
@@ -70,13 +70,50 @@ class Double_list {
     }
 
     // Copy constructor
-    //  use & to pass by reference so that the function can modify the list
+    // Double_list(const Double_list &dl) {
+    //     // if the user pass list, set the list_head, list_tail, and list_size to
+    //     // the list
+    //     this->list_head = dl.list_head;
+    //     this->list_tail = dl.list_tail;
+    //     this->list_size = dl.list_size;
+    // }
+
+    // Copy constructor
     Double_list(const Double_list &dl) {
-        // if the user pass list, set the list_head, list_tail, and list_size to
-        // the list
-        this->list_head = dl.list_head;
-        this->list_tail = dl.list_tail;
-        this->list_size = dl.list_size;
+        // create a new list to current node
+        Double_node<T> *temp = dl.list_head;
+        // if the list is empty, set the list_head, list_tail, and list_size to
+        // NULL, NULL, and 0
+        if (temp == nullptr) {
+            this->list_head = nullptr;
+            this->list_tail = nullptr;
+            this->list_size = 0;
+        } else {
+            // create a new node to current node
+            Double_node<T> *new_node = new Double_node<T>(temp->getData());
+            // set the list_head to the new node
+            this->list_head = new_node;
+            // set the list_tail to the new node
+            this->list_tail = new_node;
+            // set the list_size to 1
+            this->list_size = 1;
+            // set the temp to the next node
+            temp = temp->getNext();
+            // while the temp is not null, create a new node to current node
+            while (temp != nullptr) {
+                Double_node<T> *new_node = new Double_node<T>(temp->getData());
+                // set the list_tail to the new node
+                this->list_tail->setNext(new_node);
+                // set the new node to the list_tail
+                new_node->setPrev(this->list_tail);
+                // set the list_tail to the new node
+                this->list_tail = new_node;
+                // set the list_size to the list_size + 1
+                this->list_size++;
+                // set the temp to the next node
+                temp = temp->getNext();
+            }
+        }
     }
 
     // Set list_head to the input list_head
@@ -377,10 +414,12 @@ int main() {
     //--------------------Double List ----------------------
     // copy list
     Double_list<int> *dl2 = new Double_list<int>(*dl);
-    cout << "\nprint dl2 list after copy: ";
+    cout << "\nprint dl2 list after copy and push 3 to test whether the original will change: ";
+    dl2->push_back(3);
     dl2->print_list();
-    cout << "dl2 size: " << dl->return_size() << endl;
-
+    cout << "dl2 size: " << dl2->return_size() << endl;
+    cout << "print dl list after dl2 push_back(3): ";
+    dl->print_list();
     // -----------------------------------------------------
 
     // erase element
@@ -424,14 +463,6 @@ int main() {
     dl->print_list();
     // -----------------------------------------------------
     
-    // operator =
-    cout << "\nTest operator = " << endl;
-    Double_list<int> *dl4 = dl;
-    cout << "print dl4 list after operator = : ";
-    dl4->print_list();
-    cout << "print dl list after operator = : ";
-    dl->print_list();
-
     // Double_list Destructor
     cout << endl;
     delete dl;
