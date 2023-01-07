@@ -99,49 +99,27 @@ class Database {
         employee[index].setPosition(position);
     }
 
+/// @implements --------------------------------------------------------------
     // Feature#2 add data from behind
     void push_back(int age, string id, string name, string gender,
                    string position) {
-        insertData(age, id, name, gender, position, currentSize);
-        setCurrentSize(this->currentSize + 1);
+
     }
 
     // Feature#2 delete data from the front
     void pop_front() {
-        Employee *temp = new Employee[this->arraySize];
-        for (int i = 1; i < this->currentSize; i++) {
-            temp[i - 1] = employee[i];
-        }
-        delete[] employee;
-        employee = temp;
-        setCurrentSize(this->currentSize - 1);
+
     }
 
     // Feature#1 print data
     void printData() {
-        cout << "\nNo.\t\tAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
-        for (int i = 0; i < currentSize; i++) {
-            cout << i + 1 << ".\t\t" << employee[i].getAge() << "\t\t"
-                 << employee[i].getId() << "\t\t" << employee[i].getName()
-                 << "\t\t" << employee[i].getGender() << "\t\t"
-                 << employee[i].getPosition() << endl;
-        }
+
     }
 
-    // Feature#3 search using id
     void search(string id) {
-        for (int i = 0; i < getCurrentSize(); i++) {
-            if (employee[i].getId() == id) {
-                cout << "\nAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
-                cout << employee[i].getAge() << "\t\t" << employee[i].getId()
-                     << "\t\t" << employee[i].getName() << "\t\t"
-                     << employee[i].getGender() << "\t\t"
-                     << employee[i].getPosition() << endl;
-                return;
-            }
-        }
-        cout << "\nID " << id << " not found" << endl;
+
     }
+//*----------------------------------------------------------------------------
 
     // destructor to avoid memory leak
     ~Database() {
