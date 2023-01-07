@@ -6,20 +6,9 @@
 #include <iostream>
 using namespace std;
 
-class Database {
-   public:
-    // default constructor of array size of 10
-    Database() {
-        Employee employee[10];
-    }
-    // constructor with fixed size
-    Database(int arraySize) {
-        Employee employee[arraySize];
-    }
-};
-
 /// @brief Employee class to store data, access data
 class Employee {
+    // Feature#1
    private:
     int age;
     string id;
@@ -35,7 +24,7 @@ class Employee {
 
     string getId() const { return this->id; }
 
-    void setId(int id) { this->id = id; }
+    void setId(string id) { this->id = id; }
 
     string getName() const { return this->name; }
 
@@ -49,15 +38,118 @@ class Employee {
 
     void setPosition(string position) { this->position = position; }
     //* End of Getter and Setter -----------------------------------------------
+};
 
-    // function to print out the data
+/// @brief  Database class to store data, access data, resize array, insert data and many more
+class Database {
+   private:
+    int arraySize;
+    Employee *employee;
+    int currentSize = 0;
+
+   public:
+    //* Getter and Setter ------------------------------------------------------
+    int getCurrentSize() const { return this->currentSize; }
+
+    void setCurrentSize(int currentSize) { this->currentSize = currentSize; }
+
+    int getArraySize() const { return this->arraySize; }
+
+    void setArraySize(int arraySize) { this->arraySize = arraySize; }
+
+    Employee *getEmployee() const { return this->employee; }
+
+    void setEmployee(Employee *employee) { this->employee = employee; }
+    //* End of Getter and Setter -----------------------------------------------
+
+    // constructor with default fixed size of 10
+    Database() {
+        setArraySize(10);
+        employee = new Employee[10];
+    }
+
+    // constructor with fixed size from user
+    Database(int arraySize) {
+        setArraySize(arraySize);
+        employee = new Employee[arraySize];
+    }
+
+    // function to resize the array
+    void resize(int arraySize) {
+        Employee *temp = new Employee[arraySize];
+        for (int i = 0; i < this->arraySize; i++) {
+            temp[i] = employee[i];
+        }
+        delete [] employee;
+        employee = temp;
+    }
+
+    // function to insert data at specific index
+    void insertData(int age, string id, string name, string gender,
+                    string position, int index) {
+        if (index == this->arraySize) {
+            resize(arraySize + 10);
+            setArraySize(arraySize + 10);
+        }
+        employee[index].setAge(age);
+        employee[index].setId(id);
+        employee[index].setName(name);
+        employee[index].setGender(gender);
+        employee[index].setPosition(position);
+    }
+
+    // add data from behind
+    void push_back(int age, string id, string name, string gender,
+                   string position) {
+        insertData(age, id, name, gender, position, currentSize);
+        setCurrentSize(this->currentSize + 1);
+    }
+
+    void pop_front() {
+        Employee *temp = new Employee[this->arraySize];
+        for (int i = 1; i < this->currentSize; i++) {
+            temp[i - 1] = employee[i];
+        }
+        delete [] employee;
+        employee = temp;
+        setCurrentSize(this->currentSize - 1);
+    }
+
+    // print data
     void printData() {
-        cout << age << "\t\t" << id << "\t\t" << name << "\t\t" << gender
-             << "\t\t" << position << endl;
+        cout << "No.\t\tAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
+        for (int i = 0; i < currentSize; i++) {
+            cout << i + 1 << ".\t\t" << employee[i].getAge() << "\t\t"
+                 << employee[i].getId() << "\t\t" << employee[i].getName()
+                 << "\t\t" << employee[i].getGender() << "\t\t"
+                 << employee[i].getPosition() << endl;
+        }
+    }
+
+    // destructor to avoid memory leak
+    ~Database() {
+        delete[] employee;
+        cout << "\nDestructor called in order to avoid memory leak" << endl;
     }
 };
 
-int main() { 
+int main() {
     Database database1;
+    database1.push_back(15, "1500", "first", "male", "student");
+    database1.push_back(15, "1500", "second", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1500", "yato", "male", "student");
+
+    database1.pop_front();
+
+    database1.printData();
+
     return 0;
 }
