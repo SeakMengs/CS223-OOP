@@ -108,6 +108,11 @@ class Database {
 
     // Feature#2 delete data from the front
     void pop_front() {
+        if (getCurrentSize() == 0) {
+            cout << "\nEmpty data cannot be pop fronted" << endl; 
+            return;
+        }
+
         Employee *temp = new Employee[this->arraySize];
         for (int i = 1; i < this->currentSize; i++) {
             temp[i - 1] = employee[i];
@@ -119,6 +124,11 @@ class Database {
 
     // Feature#1 print data
     void printData() {
+        if (getCurrentSize() == 0) {
+            cout << "\nEmpty data" << endl; 
+            return;
+        }
+
         cout << "\nNo.\t\tAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
         for (int i = 0; i < currentSize; i++) {
             cout << i + 1 << ".\t\t" << employee[i].getAge() << "\t\t"
