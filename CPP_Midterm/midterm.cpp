@@ -1,8 +1,6 @@
 /// @author: Seakmeng Hor, Bunlong Prak, Sopheaknita Chea
 /// @course: CS201 Section 1
 
-#include <bits/stdc++.h>
-
 #include <iostream>
 using namespace std;
 
@@ -82,7 +80,7 @@ class Database {
             temp[i] = employee[i];
         }
         delete[] employee;
-        employee = temp;
+        setEmployee(temp);
     }
 
     // function to insert data at specific index
@@ -92,6 +90,7 @@ class Database {
             resize(arraySize + 10);
             setArraySize(arraySize + 10);
         }
+
         employee[index].setAge(age);
         employee[index].setId(id);
         employee[index].setName(name);
@@ -109,7 +108,7 @@ class Database {
     // Feature#2 delete data from the front
     void pop_front() {
         if (getCurrentSize() == 0) {
-            cout << "\nEmpty data cannot be pop fronted" << endl; 
+            cout << "\nEmpty data cannot be pop fronted" << endl;
             return;
         }
 
@@ -118,14 +117,14 @@ class Database {
             temp[i - 1] = employee[i];
         }
         delete[] employee;
-        employee = temp;
+        setEmployee(temp);
         setCurrentSize(this->currentSize - 1);
     }
 
     // Feature#1 print data
     void printData() {
         if (getCurrentSize() == 0) {
-            cout << "\nEmpty data" << endl; 
+            cout << "\nEmpty data" << endl;
             return;
         }
 
@@ -161,6 +160,10 @@ class Database {
 };
 
 int main() {
+
+    // clear terminal
+    system("cls");
+
     // Database database1;
 
     // database1 with fixed array size of 50
