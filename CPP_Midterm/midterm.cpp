@@ -40,7 +40,8 @@ class Employee {
     //* End of Getter and Setter -----------------------------------------------
 };
 
-/// @brief  Database class to store data, access data, resize array, insert data and many more
+/// @brief  Database class to store data, access data, resize array, insert data
+/// and many more
 class Database {
    private:
     int arraySize;
@@ -80,7 +81,7 @@ class Database {
         for (int i = 0; i < this->arraySize; i++) {
             temp[i] = employee[i];
         }
-        delete [] employee;
+        delete[] employee;
         employee = temp;
     }
 
@@ -98,32 +99,47 @@ class Database {
         employee[index].setPosition(position);
     }
 
-    // add data from behind
+    // Feature#2 add data from behind
     void push_back(int age, string id, string name, string gender,
                    string position) {
         insertData(age, id, name, gender, position, currentSize);
         setCurrentSize(this->currentSize + 1);
     }
 
+    // Feature#2 delete data from the front
     void pop_front() {
         Employee *temp = new Employee[this->arraySize];
         for (int i = 1; i < this->currentSize; i++) {
             temp[i - 1] = employee[i];
         }
-        delete [] employee;
+        delete[] employee;
         employee = temp;
         setCurrentSize(this->currentSize - 1);
     }
 
-    // print data
+    // Feature#1 print data
     void printData() {
-        cout << "No.\t\tAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
+        cout << "\nNo.\t\tAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
         for (int i = 0; i < currentSize; i++) {
             cout << i + 1 << ".\t\t" << employee[i].getAge() << "\t\t"
                  << employee[i].getId() << "\t\t" << employee[i].getName()
                  << "\t\t" << employee[i].getGender() << "\t\t"
                  << employee[i].getPosition() << endl;
         }
+    }
+
+    void search(string id) {
+        for (int i = 0; i < getCurrentSize(); i++) {
+            if (employee[i].getId() == id) {
+                cout << "\nAge\t\tID\t\tName\t\tGender\t\tPosition" << endl;
+                cout << employee[i].getAge() << "\t\t" << employee[i].getId()
+                     << "\t\t" << employee[i].getName() << "\t\t"
+                     << employee[i].getGender() << "\t\t"
+                     << employee[i].getPosition() << endl;
+                return;
+            }
+        }
+        cout << "\nID " << id << " not found" << endl;
     }
 
     // destructor to avoid memory leak
@@ -134,22 +150,28 @@ class Database {
 };
 
 int main() {
-    Database database1;
+    // Database database1;
+
+    // database1 with fixed array size of 50
+    Database database1 = Database(50);
+
     database1.push_back(15, "1500", "first", "male", "student");
-    database1.push_back(15, "1500", "second", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
-    database1.push_back(15, "1500", "yato", "male", "student");
+    database1.push_back(15, "1501", "second", "male", "student");
+    database1.push_back(15, "1502", "yato", "male", "student");
+    database1.push_back(15, "1503", "yato", "male", "student");
+    database1.push_back(15, "1504", "yato", "male", "student");
+    database1.push_back(15, "1505", "yato", "male", "student");
+    database1.push_back(15, "1506", "yato", "male", "student");
+    database1.push_back(15, "1507", "yato", "male", "student");
+    database1.push_back(15, "1508", "yato", "male", "student");
+    database1.push_back(15, "1509", "yato", "male", "student");
+    database1.push_back(15, "1510", "yato", "male", "student");
 
     database1.pop_front();
 
     database1.printData();
+
+    database1.search("1501");
 
     return 0;
 }
