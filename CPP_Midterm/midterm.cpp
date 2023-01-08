@@ -76,7 +76,7 @@ class Database {
     // function to resize the array
     void resize(int arraySize) {
         Employee *temp = new Employee[arraySize];
-        for (int i = 0; i < this->arraySize; i++) {
+        for (int i = 0; i < getArraySize(); i++) {
             temp[i] = employee[i];
         }
         delete[] employee;
@@ -86,7 +86,7 @@ class Database {
     // function to insert data at specific index
     void insertData(int age, string id, string name, string gender,
                     string position, int index) {
-        if (index == this->arraySize) {
+        if (index == getArraySize()) {
             resize(arraySize + 10);
             setArraySize(arraySize + 10);
         }
@@ -112,8 +112,8 @@ class Database {
             return;
         }
 
-        Employee *temp = new Employee[this->arraySize];
-        for (int i = 1; i < this->currentSize; i++) {
+        Employee *temp = new Employee[getArraySize()];
+        for (int i = 1; i < getCurrentSize(); i++) {
             temp[i - 1] = employee[i];
         }
         delete[] employee;
