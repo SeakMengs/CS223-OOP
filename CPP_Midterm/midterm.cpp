@@ -43,6 +43,7 @@ class Employee {
 class Database {
    private:
     int arraySize;
+    // Declare Employee object in order to create dynamic array later
     Employee *employee;
     int currentSize = 0;
 
@@ -170,22 +171,23 @@ int main() {
     Database database1 = Database(50);
 
     database1.push_back(15, "1500", "first", "male", "student");
-    database1.push_back(15, "1501", "second", "male", "student");
-    database1.push_back(15, "1502", "yato", "male", "student");
-    database1.push_back(15, "1503", "yato", "male", "student");
-    database1.push_back(15, "1504", "yato", "male", "student");
-    database1.push_back(15, "1505", "yato", "male", "student");
-    database1.push_back(15, "1506", "yato", "male", "student");
-    database1.push_back(15, "1507", "yato", "male", "student");
-    database1.push_back(15, "1508", "yato", "male", "student");
-    database1.push_back(15, "1509", "yato", "male", "student");
-    database1.push_back(15, "1510", "yato", "male", "student");
+    database1.push_back(18, "1501", "second", "female", "student");
+    database1.push_back(15, "1502", "kakashi", "male", "student");
+    database1.push_back(19, "1503", "yato", "male", "student");
+    database1.push_back(15, "1504", "naruto", "male", "student");
+    database1.push_back(18, "1505", "nita", "female", "student");
+    database1.push_back(11, "1506", "Sak", "male", "student");
+    database1.push_back(15, "1507", "L", "male", "student");
+    database1.push_back(53, "1508", "Nate", "male", "student");
+    database1.push_back(15, "1509", "Bunlong", "male", "student");
+    database1.push_back(19, "1510", "Tom", "male", "student");
 
     database1.pop_front();
 
     database1.printData();
 
     database1.search("1501");
+    database1.search("15051");
 
     return 0;
 }

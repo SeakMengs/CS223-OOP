@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include <iostream>
 using namespace std;
 
@@ -19,7 +20,17 @@ int main() {
     // cout << sizeof(a[0]) / sizeof(int);
     // int a[10];
     // cout << a[0];
+    vector<int> a;
+    a.reserve(2);
 
+    a.push_back(2);
+    a.push_back(2);
 
+    // a.resize(50);
+    a.push_back(2);
+
+    for (auto i : a) {
+        cout << i << " ";
+    }
     return 0;
 }
