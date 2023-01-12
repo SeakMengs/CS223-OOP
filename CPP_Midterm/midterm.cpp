@@ -165,10 +165,10 @@ int main() {
     // clear terminal
     system("cls");
 
-    // Database database1;
+    Database database1;
 
     // database1 with fixed array size of 50
-    Database database1 = Database(50);
+    // Database database1 = Database(50);
 
     database1.push_back(15, "1500", "first", "male", "student");
     database1.push_back(18, "1501", "second", "female", "student");
@@ -181,13 +181,17 @@ int main() {
     database1.push_back(53, "1508", "Nate", "male", "student");
     database1.push_back(15, "1509", "Bunlong", "male", "student");
     database1.push_back(19, "1510", "Tom", "male", "student");
+    database1.push_back(19, "1511", "Meng", "male", "student");
 
+    database1.pop_front();
     database1.pop_front();
 
     database1.printData();
 
     database1.search("1501");
     database1.search("15051");
+    database1.search("1511");
+
 
     return 0;
 }
