@@ -1,3 +1,6 @@
+// Author: Seakmeng Hor
+// CS223 section 1
+
 public class Student {
     private String studentId;
     private String studentName;

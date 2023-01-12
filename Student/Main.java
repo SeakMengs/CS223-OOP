@@ -1,3 +1,6 @@
+// Author: Seakmeng Hor
+// CS223 section 1
+
 import java.util.HashSet;
 import java.util.Set;
 
