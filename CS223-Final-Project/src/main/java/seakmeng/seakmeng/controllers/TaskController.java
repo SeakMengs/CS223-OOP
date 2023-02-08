@@ -56,6 +56,7 @@ public class TaskController {
         if (!taskRepository.existsById(id)) {
             return "redirect:/tasks";
         }
+        
         Task task = taskRepository.findById(id).orElseThrow();
         model.addAttribute("taskedit", task);
         return "taskedit";
@@ -68,6 +69,7 @@ public class TaskController {
         if (!taskRepository.existsById(id)) {
             return "redirect:/tasks";
         }
+
         Task task = taskRepository.findById(id).orElseThrow();
         task.setTask_date(task_date);
         task.setTask_name(task_name);
@@ -87,5 +89,21 @@ public class TaskController {
         Task task = taskRepository.findById(id).orElseThrow();
         taskRepository.delete(task);
         return "redirect:/tasks";
+    }
+
+    @PostMapping("/task{id}/markTaskDone")
+    public String markTaskDone(@PathVariable(value = "id") Long id) {
+        if (!taskRepository.existsById(id)) {
+            return "redirect:/tasks";
+        }
+
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        task.setTask_status("Done");
+        taskRepository.save(task);
+        
+        // not sure which route I should redirect after mark task done
+        // return "redirect:/tasks";
+        return "redirect:/task?id=" + id;
     }
 }

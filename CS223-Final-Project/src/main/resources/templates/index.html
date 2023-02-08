@@ -6,11 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seakmeng CS223 Final Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
         .main {
             display: flex;
             flex-direction: column;
+            gap: 10px;
+            align-items: center;
         }
     </style>
 </head>
@@ -18,8 +24,8 @@
 <body>
     <div class="main">
         <h1>This is Main Page</h1>
-        <a href="./taskadd">Add Task</a>
-        <a href="./tasks">Task List</a>
+        <a href="./tasks"><button class="btn btn-dark">Task List</button></a>
+        <a href="./taskadd"><button class="btn btn-info">Add Task</button></a>
     </div>
 </body>
 

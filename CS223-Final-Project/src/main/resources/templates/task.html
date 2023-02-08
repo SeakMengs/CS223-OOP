@@ -8,23 +8,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .btnContainer {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
+    <nav>
+        <a href="./"><button class="btn btn-primary">Go to main page</button></a>
+        <a href="./tasks"><button class="btn btn-dark">Task List</button></a>
+        <a href="./taskadd"><button class="btn btn-info">Add task</button></a>
+    </nav>
     <table class="table">
 
         <tbody>
             <div th:each="taskDetail : ${task}">
-                <H1 th:text="'TaskID :' + ${taskDetail.id}" />
-                <H1 th:text="'taskDate :' + ${taskDetail.task_date}" />
-                <H1 th:text="'TaskName :' + ${taskDetail.task_name}" />
-                <H1 th:text="'TaskDepartment :' + ${taskDetail.task_description}" /><br>
-                <a th:href="'/task' + ${task.id} + '/edit'">
-                    <button class="btn btn-warning">Edit</button>
-                </a>
-                <form th:action="'/task' + ${task.id} + '/delete'" method="post">
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
+                <H1 th:text="'Task ID : ' + ${taskDetail.id}" />
+                <H1 th:text="'Task Date : ' + ${taskDetail.task_date}" />
+                <H1 th:text="'Task Name : ' + ${taskDetail.task_name}" />
+                <H1 th:text="'Task Description : ' + ${taskDetail.task_description}" />
+                <H1 th:text="'Task Status : ' + ${taskDetail.task_status}" /><br>
+                <div class="btnContainer">
+                    <a th:href="'/task' + ${task.id} + '/edit'">
+                        <button class="btn btn-warning">Edit</button>
+                    </a>
+                    <form th:action="'/task' + ${task.id} + '/markTaskDone'" method="post">
+                        <button class="btn btn-success" type="submit">Mark Task Done</button>
+                    </form>
+                    <form th:action="'/task' + ${task.id} + '/delete'" method="post">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
 
             </div>
 
