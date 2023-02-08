@@ -23,6 +23,16 @@ public class TaskController {
         return "tasks";
     }
 
+    @GetMapping("/task")
+    public String getTask(@RequestParam(name = "id", required = false) Long id, Model model) {
+        if (!taskRepository.existsById(id)) {
+            return "redirect:/tasks";
+        }
+        Task task = taskRepository.findById(id).orElseThrow();
+        model.addAttribute("task", task);
+        return "task";
+    }
+
     @PostMapping("/tasks/add")
     public String addNewTask(@RequestParam String task_date, @RequestParam String task_name,
             @RequestParam String task_description, @RequestParam String task_status, Model model) {
@@ -47,30 +57,30 @@ public class TaskController {
             return "redirect:/tasks";
         }
         Task task = taskRepository.findById(id).orElseThrow();
-        model.addAttribute("task", task);
+        model.addAttribute("taskedit", task);
         return "taskedit";
     }
 
     @PostMapping("/task{id}/edit")
-    public String editTask(@RequestParam(value = "id") Long id, @RequestParam String task_date,
+    public String editTask(@PathVariable(value = "id") Long id, @RequestParam String task_date,
             @RequestParam String task_name,
             @RequestParam String task_description, @RequestParam String task_status, Model model) {
-            if(!taskRepository.existsById(id)){
-                return "redirect:/tasks";
-            }
-            Task task = taskRepository.findById(id).orElseThrow();
-            task.setTask_date(task_date);
-            task.setTask_name(task_name);
-            task.setTask_description(task_description);
-            task.setTask_status(task_status);
-            
-            taskRepository.save(task);
+        if (!taskRepository.existsById(id)) {
             return "redirect:/tasks";
+        }
+        Task task = taskRepository.findById(id).orElseThrow();
+        task.setTask_date(task_date);
+        task.setTask_name(task_name);
+        task.setTask_description(task_description);
+        task.setTask_status(task_status);
+
+        taskRepository.save(task);
+        return "redirect:/tasks";
     }
 
-    @PostMapping("/task{id}/delete") 
+    @PostMapping("/task{id}/delete")
     public String deleteTask(@PathVariable(value = "id") Long id, Model model) {
-        if(!taskRepository.existsById(id)){
+        if (!taskRepository.existsById(id)) {
             return "redirect:/tasks";
         }
 

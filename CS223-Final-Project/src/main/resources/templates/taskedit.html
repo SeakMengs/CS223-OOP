@@ -1,15 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Task</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <h1>task edit</h1>
+    <div th:each="taskToEdit: ${taskedit}">
+        <form method="post">
+            <div class="form-group">
+                <label for="taskDate">Task Date</label>
+                <input type="text" th:value="${taskToEdit.task_date}" name="task_date" class="form-control"
+                    id="taskDate" placeholder="Enter task date">
+            </div>
+            <div class="form-group">
+                <label for="taskName">Task Name</label>
+                <input type="text" th:value="${taskToEdit.task_name}" name="task_name" class="form-control"
+                    id="taskName" placeholder="Enter task name">
+            </div>
+            <div class="form-group">
+                <label for="taskDescription">Task Description</label>
+                <input type="text" th:value="${taskToEdit.task_description}" name="task_description"
+                    class="form-control" id="taskDescription" placeholder="Enter task description">
+            </div>
+            <div class="form-group">
+                <label for="taskStatus">Task Status</label>
+                <input type="text" th:value="${taskToEdit.task_status}" name="task_status" class="form-control"
+                    id="taskStatus" placeholder="Enter task status">
+            </div>
+            <button type="submit" class="btn btn-primary">Edit Student</button>
+        </form>
+    </div>
+
 </body>
 
 </html>
