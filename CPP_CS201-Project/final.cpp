@@ -2,6 +2,9 @@
 /// @course: CS201 Section 1
 
 #include <iostream>
+// required for file writing and reading file
+#include <fstream>
+
 using namespace std;
 
 /// @brief Employee class to store data, access data
@@ -84,9 +87,16 @@ class Database {
         setEmployee(temp);
     }
 
-    // function to insert data at specific index
-    void insertData(int age, string id, string name, string gender,
+    // Feature#4 function to insert data at specific index (can also modify
+    // data)
+    void modifyData(int age, string id, string name, string gender,
                     string position, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+
+        // since we use this function for push back, we need to check if array
+        // is out of bound and resize it
         if (index == getArraySize()) {
             resize(arraySize + 10);
             setArraySize(arraySize + 10);
@@ -99,10 +109,51 @@ class Database {
         employee[index].setPosition(position);
     }
 
+    // Feature#4 modify age
+    void modifyAge(int age, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+        employee[index].setAge(age);
+    }
+
+    // Feature#4 modify id
+    void modifyId(string id, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+        employee[index].setId(id);
+    }
+
+    // Feature#4 modify name
+    void modifyName(string name, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+        employee[index].setName(name);
+    }
+
+    // Feature#4 modify gender
+    void modifyGender(string gender, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+        employee[index].setGender(gender);
+    }
+
+    // Feature#4 modify position
+    void modifyPosition(string position, int index) {
+        // since non-programmer count from 1, we adapt to their use but in our
+        // program we minus index by 1 because array index start from 0
+        index--;
+        employee[index].setPosition(position);
+    }
+
     // Feature#2 add data from behind
     void push_back(int age, string id, string name, string gender,
                    string position) {
-        insertData(age, id, name, gender, position, currentSize);
+        // push to last index
+        modifyData(age, id, name, gender, position, getCurrentSize() + 1);
         setCurrentSize(this->currentSize + 1);
     }
 
@@ -153,6 +204,156 @@ class Database {
         cout << "\nID " << id << " not found" << endl;
     }
 
+    // Feature#5 save data to csv format (by default if no file name is given,
+    // it will be saved as data.csv)
+    void save(string fileName = "data") {
+        // add .csv extension to file name
+        fileName += ".csv";
+
+        // if data is empty, print error message
+        if (getCurrentSize() == 0) {
+            cout << "\nEmpty data cannot be saved" << endl;
+            return;
+        }
+
+        // create file if not exist, if exist, overwrite it
+        fstream file(fileName, ios::out);
+
+        // test if we can open file or not, if not print error message
+        if (!file.is_open()) {
+            cout << "\nSomething went wrong, maybe the file name contain "
+                    "special character?"
+                 << endl;
+            return;
+        }
+
+        // write header to file first
+        file << "Age,"
+             << "ID,"
+             << "Name,"
+             << "Position," << endl;
+
+        // write data to file
+        for (int i = 0; i < getCurrentSize(); i++) {
+            file << employee[i].getAge() << "," << employee[i].getId() << ","
+                 << employee[i].getName() << "," << employee[i].getGender()
+                 << "," << employee[i].getPosition() << endl;
+        }
+
+        file.close();
+    }
+
+    // Feature#5 load data from csv format (by default if no file name is given,
+    // it will load data.csv)
+    void load(Database &database, string fileName = "data") {
+        if (getCurrentSize() != 0) {
+            cout << "\nDatabase is not empty, cannot load data" << endl;
+            return;
+        }
+
+        // add .csv extension to file name
+        fileName += ".csv";
+
+        // if file is not exist, print error message
+        if (!ifstream(fileName)) {
+            cout << "\nFile " << fileName << " not found" << endl;
+            return;
+        }
+
+        // open and read file
+        fstream file;
+        file.open(fileName, ios::in);
+
+        if (file.is_open()) {
+            int age = 0;
+            string line, id, name, gender, position;
+
+            // read header because we don't need it to push to database
+            file >> line;
+
+            // read data and push to database while not end of file
+            while (!file.eof()) {
+                file >> line;
+
+                // since we read line by line, if line is empty, it means we
+                // reach end of file
+                if (line == "") {
+                    break;
+                }
+
+                // remove comma from line and store it to age, id, name, gender,
+                // position after storing age, remove age and comma from line
+                age = stoi(line.substr(0, line.find(",")));
+                line.erase(0, line.find(",") + 1);
+
+                id = line.substr(0, line.find(","));
+                line.erase(0, line.find(",") + 1);
+
+                name = line.substr(0, line.find(","));
+                line.erase(0, line.find(",") + 1);
+
+                gender = line.substr(0, line.find(","));
+                line.erase(0, line.find(",") + 1);
+
+                // the rest of line is position
+                position = line;
+                // set line to empty string
+                line = "";
+
+                database.push_back(age, id, name, gender, position);
+            }
+        } else {
+            cout << "\nFile " << fileName << " cannot be opened" << endl;
+        }
+
+        file.close();
+    }
+
+    // Feature#6 sort by id (ascending)
+    void sortByIdAsc() {
+        // if data is empty, print error message
+        if (getCurrentSize() == 0) {
+            cout << "\nEmpty data cannot be sorted" << endl;
+            return;
+        }
+
+        // sort using insertion sort
+        for (int i = 1; i < getCurrentSize(); i++) {
+            Employee temp = employee[i];
+            int j = i - 1;
+
+            while (j >= 0 && employee[j].getId() > temp.getId()) {
+                employee[j + 1] = employee[j];
+                j--;
+            }
+
+            employee[j + 1] = temp;
+        }
+
+    }
+
+    // Feature#6 sort by id (descending)
+    void sortByIdDesc() {
+        // if data is empty, print error message
+        if (getCurrentSize() == 0) {
+            cout << "\nEmpty data cannot be sorted" << endl;
+            return;
+        }
+
+        // sort using insertion sort
+        for (int i = 1; i < getCurrentSize(); i++) {
+            Employee temp = employee[i];
+            int j = i - 1;
+
+            while (j >= 0 && employee[j].getId() < temp.getId()) {
+                employee[j + 1] = employee[j];
+                j--;
+            }
+
+            employee[j + 1] = temp;
+        }
+    }
+
     // destructor to avoid memory leak
     ~Database() {
         delete[] employee;
@@ -161,37 +362,70 @@ class Database {
 };
 
 int main() {
-
     // clear terminal
     system("cls");
 
-    Database database1;
+    Database database;
 
-    // database1 with fixed array size of 50
-    // Database database1 = Database(50);
+    // database with fixed array size of 50
+    // Database database = Database(50);
 
-    database1.push_back(15, "1500", "first", "male", "student");
-    database1.push_back(18, "1501", "second", "female", "student");
-    database1.push_back(15, "1502", "kakashi", "male", "student");
-    database1.push_back(19, "1503", "yato", "male", "student");
-    database1.push_back(15, "1504", "naruto", "male", "student");
-    database1.push_back(18, "1505", "nita", "female", "student");
-    database1.push_back(11, "1506", "Sak", "male", "student");
-    database1.push_back(15, "1507", "L", "male", "student");
-    database1.push_back(53, "1508", "Nate", "male", "student");
-    database1.push_back(15, "1509", "Bunlong", "male", "student");
-    database1.push_back(19, "1510", "Tom", "male", "student");
-    database1.push_back(19, "1511", "Meng", "male", "student");
+    database.push_back(15, "1500", "first", "male", "student");
+    database.push_back(18, "1501", "second", "female", "student");
+    database.push_back(19, "1503", "yato", "male", "student");
+    database.push_back(15, "1502", "kakashi", "male", "student");
+    database.push_back(18, "1505", "nita", "female", "student");
+    database.push_back(15, "1504", "naruto", "male", "student");
+    database.push_back(11, "1506", "Sak", "male", "student");
+    database.push_back(15, "1507", "L", "male", "student");
+    database.push_back(15, "1509", "Bunlong", "male", "student");
+    database.push_back(53, "1508", "Nate", "male", "student");
+    database.push_back(19, "1511", "Meng", "male", "student");
+    database.push_back(19, "1510", "Tom", "male", "student");
 
-    database1.pop_front();
-    database1.pop_front();
+    database.pop_front();
+    database.pop_front();
 
-    database1.printData();
+    database.printData();
 
-    database1.search("1501");
-    database1.search("15051");
-    database1.search("1511");
+    database.search("1501");
+    database.search("15051");
+    database.search("1511");
 
+    // modify data at row (age, id, name, gender, position, index)
+    database.modifyData(20, "1502", "Kai", "female", "doctor", 1);
+
+    // modify by one variable at row (variable, index)
+    database.modifyAge(25, 1);
+    database.modifyName("Fanny", 5);
+
+    // print database again to prove our data has been updated
+    database.printData();
+
+    // save database to csv file
+    database.save();
+
+    // create database2 to load data from csv file
+    cout << "\nDatabase2 created to load data from csv file";
+
+    Database database2;
+
+    // load data from csv file to database2 and print it
+    database2.load(database2);
+    database2.push_back(87, "1515", "Jame", "male", "actor");
+    
+    database2.sortByIdAsc();
+    database2.printData();
+
+    database2.sortByIdDesc();
+    database2.printData();
+    
+    database2.save("employee_detail");
+    // database2.save("employee_detail!@#$%&^&*(*())");
+
+    // show that an error will be printed if we try to load data to a non-empty
+    // database
+    database2.load(database2);
 
     return 0;
 }
