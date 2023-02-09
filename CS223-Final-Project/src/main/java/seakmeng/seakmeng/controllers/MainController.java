@@ -12,9 +12,4 @@ public class MainController {
     public String indexPage(Model model) {
         return "index";
     }
-
-    @GetMapping("/getAllTasks")
-    public String helloPage(Model model) {
-        return "hello";
-    }
 }

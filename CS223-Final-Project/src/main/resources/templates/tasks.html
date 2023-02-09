@@ -31,6 +31,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Date</th>
+                <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Status</th>
             </tr>
@@ -40,6 +41,7 @@
             <tr th:each="task : ${tasks}">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.task_date}"></td>
+                <td th:text="${task.task_name}"></td>
                 <td th:text="${task.task_description}"></td>
                 <td th:text="${task.task_status}"></td>
                 <td><a th:href="'/task?id='+${task.id}">
