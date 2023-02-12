@@ -4,8 +4,13 @@
 #include <iostream>
 // required for file writing and reading file
 #include <fstream>
+#include <chrono>
 
 using namespace std;
+
+// declare global variable
+auto start = chrono::steady_clock::now();
+
 
 /// @brief Employee class to store data, access data
 class Employee {
@@ -426,6 +431,12 @@ int main() {
     // show that an error will be printed if we try to load data to a non-empty
     // database
     database2.load(database2);
+
+    // show time complexity
+    auto end = chrono::steady_clock::now();
+    auto diff = end - start;
+    cout << "\n"
+         << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
     return 0;
 }
