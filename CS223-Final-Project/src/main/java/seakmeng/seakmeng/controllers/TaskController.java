@@ -35,8 +35,8 @@ public class TaskController {
 
     @PostMapping("/tasks/add")
     public String addNewTask(@RequestParam String task_date, @RequestParam String task_name,
-            @RequestParam String task_description, @RequestParam String task_status, Model model) {
-        Task task = new Task(task_date, task_name, task_description, task_status);
+            @RequestParam String task_description, Model model) {
+        Task task = new Task(task_date, task_name, task_description);
         taskRepository.save(task);
         return ("redirect:/tasks");
     }
@@ -65,7 +65,7 @@ public class TaskController {
     @PostMapping("/task{id}/edit")
     public String editTask(@PathVariable(value = "id") Long id, @RequestParam String task_date,
             @RequestParam String task_name,
-            @RequestParam String task_description, @RequestParam String task_status, Model model) {
+            @RequestParam String task_description, Model model) {
         if (!taskRepository.existsById(id)) {
             return "redirect:/tasks";
         }
@@ -74,7 +74,6 @@ public class TaskController {
         task.setTask_date(task_date);
         task.setTask_name(task_name);
         task.setTask_description(task_description);
-        task.setTask_status(task_status);
 
         taskRepository.save(task);
         return "redirect:/tasks";

@@ -22,11 +22,11 @@ public class Task {
     }
 
     //Constructor with fields
-    public Task(String task_date, String task_name, String task_description, String task_status) {
+    public Task(String task_date, String task_name, String task_description) {
         this.task_date = task_date;
         this.task_name = task_name;
         this.task_description = task_description;
-        this.task_status = task_status;
+        this.task_status = "On Going";
     }
 
     public Long getId() {
