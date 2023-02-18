@@ -209,11 +209,22 @@ class Database {
         cout << "\nID " << id << " not found" << endl;
     }
 
+    // Feature#5 helper function
+    void validateFileName(string &fileName) {
+        // if find .csv extension, don't do anything, else we add .csv extension
+        string isCSV = fileName.substr(fileName.length() - 4, 4);
+        if (isCSV != ".csv") {
+            fileName += ".csv";
+        } else {
+            cout << "\nFile name already contain .csv extension" << endl;
+        }
+    }
+
     // Feature#5 save data to csv format (by default if no file name is given,
     // it will be saved as data.csv)
     void save(string fileName = "data") {
-        // add .csv extension to file name
-        fileName += ".csv";
+        
+        validateFileName(fileName);
 
         // if data is empty, print error message
         if (getCurrentSize() == 0) {
@@ -256,8 +267,7 @@ class Database {
             return;
         }
 
-        // add .csv extension to file name
-        fileName += ".csv";
+        validateFileName(fileName);
 
         // if file is not exist, print error message
         if (!ifstream(fileName)) {
@@ -425,7 +435,7 @@ int main() {
     database2.sortByIdDesc();
     database2.printData();
     
-    database2.save("employee_detail");
+    database2.save("employee_detail.csv");
     // database2.save("employee_detail!@#$%&^&*(*())");
 
     // show that an error will be printed if we try to load data to a non-empty
