@@ -261,11 +261,13 @@ class Database {
 
     // Feature#5 load data from csv format (by default if no file name is given,
     // it will load data.csv)
-    void load(Database &database, string fileName = "data") {
-        if (getCurrentSize() != 0) {
-            cout << "\nDatabase is not empty, cannot load data" << endl;
-            return;
-        }
+    void load(string fileName = "data") {
+
+        // if we don't want to load data to non-empty database, uncomment this
+        // if (getCurrentSize() != 0) {
+        //     cout << "\nDatabase is not empty, cannot load data" << endl;
+        //     return;
+        // }
 
         validateFileName(fileName);
 
@@ -274,6 +276,12 @@ class Database {
             cout << "\nFile " << fileName << " not found" << endl;
             return;
         }
+
+        // delete current database
+        delete[] employee;
+        // create new array database and set current size to 0
+        setEmployee(new Employee[getArraySize()]);
+        setCurrentSize(0);
 
         // open and read file
         fstream file;
@@ -315,7 +323,8 @@ class Database {
                 // set line to empty string
                 line = "";
 
-                database.push_back(age, id, name, gender, position);
+                // push data to database
+                push_back(age, id, name, gender, position);
             }
         } else {
             cout << "\nFile " << fileName << " cannot be opened" << endl;
@@ -408,7 +417,7 @@ int main() {
     database.search("1511");
 
     // modify data at row (age, id, name, gender, position, index)
-    database.modifyData(20, "1502", "Kai", "female", "doctor", 1);
+    database.modifyData(20, "1502", "Kai", "female", "doctor", 2);
 
     // modify by one variable at row (variable, index)
     database.modifyAge(25, 1);
@@ -426,7 +435,7 @@ int main() {
     Database database2;
 
     // load data from csv file to database2 and print it
-    database2.load(database2);
+    database2.load();
     database2.push_back(87, "1515", "Jame", "male", "actor");
     
     database2.sortByIdAsc();
@@ -438,9 +447,11 @@ int main() {
     database2.save("employee_detail.csv");
     // database2.save("employee_detail!@#$%&^&*(*())");
 
-    // show that an error will be printed if we try to load data to a non-empty
-    // database
-    database2.load(database2);
+    // load data from csv file to database2 and print it again to show we override database2
+    cout << "\nLoad data from csv file to database2 again to show we override database2" << endl;
+    database2.load("employee_detail");
+    database2.push_back(50, "1516", "Tom", "male", "actor");
+    database2.printData();
 
     // show time complexity
     auto end = chrono::steady_clock::now();
