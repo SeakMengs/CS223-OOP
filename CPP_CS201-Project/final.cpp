@@ -3,14 +3,13 @@
 
 #include <iostream>
 // required for file writing and reading file
-#include <fstream>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 
 // declare global variable
 auto start = chrono::steady_clock::now();
-
 
 /// @brief Employee class to store data, access data
 class Employee {
@@ -223,7 +222,6 @@ class Database {
     // Feature#5 save data to csv format (by default if no file name is given,
     // it will be saved as data.csv)
     void save(string fileName = "data") {
-        
         validateFileName(fileName);
 
         // if data is empty, print error message
@@ -263,12 +261,7 @@ class Database {
     // it will load data.csv)
     void load(string fileName = "data") {
 
-        // if we don't want to load data to non-empty database, uncomment this
-        // if (getCurrentSize() != 0) {
-        //     cout << "\nDatabase is not empty, cannot load data" << endl;
-        //     return;
-        // }
-
+        // if file name does not contain .csv extension, add it
         validateFileName(fileName);
 
         // if file is not exist, print error message
@@ -277,11 +270,17 @@ class Database {
             return;
         }
 
-        // delete current database
-        delete[] employee;
-        // create new array database and set current size to 0
-        setEmployee(new Employee[getArraySize()]);
-        setCurrentSize(0);
+        // show user we overwrite their database if database is not empty
+        if (getCurrentSize() != 0) {
+            cout << "\nDatabase is not empty, we are overwriting your existing database" << endl;
+
+            // delete current database
+            delete[] employee;
+
+            // create new array database and set current size to 0
+            setEmployee(new Employee[getArraySize()]);
+            setCurrentSize(0);
+        }
 
         // open and read file
         fstream file;
@@ -353,7 +352,6 @@ class Database {
 
             employee[j + 1] = temp;
         }
-
     }
 
     // Feature#6 sort by id (descending)
@@ -437,18 +435,21 @@ int main() {
     // load data from csv file to database2 and print it
     database2.load();
     database2.push_back(87, "1515", "Jame", "male", "actor");
-    
+
     database2.sortByIdAsc();
     database2.printData();
 
     database2.sortByIdDesc();
     database2.printData();
-    
+
     database2.save("employee_detail.csv");
     // database2.save("employee_detail!@#$%&^&*(*())");
 
-    // load data from csv file to database2 and print it again to show we override database2
-    cout << "\nLoad data from csv file to database2 again to show we override database2" << endl;
+    // load data from csv file to database2 and print it again to show we
+    // override database2
+    cout << "\nLoad data from csv file to database2 again to show we override "
+            "database2"
+         << endl;
     database2.load("employee_detail");
     database2.push_back(50, "1516", "Tom", "male", "actor");
     database2.printData();
