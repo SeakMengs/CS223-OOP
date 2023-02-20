@@ -106,11 +106,21 @@ class Database {
             setArraySize(arraySize + 10);
         }
 
+        // check duplicate id
+        for (int i = 0; i < getCurrentSize(); i++) {
+            // if duplicate id besides itself, stop the function
+            if (employee[i].getId() == id && i != index) {
+                cout << "\nDuplicate ID found, please try different id beside " << id << endl;
+                return;
+            }
+        }
+
         employee[index].setAge(age);
         employee[index].setId(id);
         employee[index].setName(name);
         employee[index].setGender(gender);
         employee[index].setPosition(position);
+
     }
 
     // Feature#4 modify age
@@ -126,6 +136,16 @@ class Database {
         // since non-programmer count from 1, we adapt to their use but in our
         // program we minus index by 1 because array index start from 0
         index--;
+
+        // check duplicate id
+        for (int i = 0; i < getCurrentSize(); i++) {
+            // if duplicate id besides itself, stop the function
+            if (employee[i].getId() == id && i != index) {
+                cout << "\nDuplicate ID found, please try different id beside " << id << endl;
+                return;
+            }
+        }
+
         employee[index].setId(id);
     }
 
@@ -156,6 +176,16 @@ class Database {
     // Feature#2 add data from behind
     void push_back(int age, string id, string name, string gender,
                    string position) {
+        
+        // check duplicate id
+        for (int i = 0; i < getCurrentSize(); i++) {
+            // if duplicate id besides itself, stop the function
+            if (employee[i].getId() == id) {
+                cout << "\nDuplicate ID found, please try different id beside " << id << endl;
+                return;
+            }
+        }
+
         // push to last index
         modifyData(age, id, name, gender, position, getCurrentSize() + 1);
         setCurrentSize(this->currentSize + 1);
@@ -245,7 +275,8 @@ class Database {
         file << "Age,"
              << "ID,"
              << "Name,"
-             << "Position," << endl;
+             << "Gender,"
+             << "Position" << endl;
 
         // write data to file
         for (int i = 0; i < getCurrentSize(); i++) {
@@ -452,6 +483,7 @@ int main() {
          << endl;
     database2.load("employee_detail");
     database2.push_back(50, "1516", "Tom", "male", "actor");
+    database2.modifyData(27, "1515", "Kai", "male", "professor", 1);
     database2.printData();
 
     // show time complexity
