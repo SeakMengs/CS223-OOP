@@ -9,7 +9,7 @@
 using namespace std;
 
 // declare global variable
-auto start = chrono::steady_clock::now();
+// auto start = chrono::steady_clock::now();
 
 /// @brief Employee class to store data, access data
 class Employee {
@@ -295,7 +295,7 @@ class Database {
         // if file name does not contain .csv extension, add it
         validateFileName(fileName);
 
-        // if file is not exist, print error message
+        // if file does not exist, print error message
         if (!ifstream(fileName)) {
             cout << "\nFile " << fileName << " not found" << endl;
             return;
@@ -365,6 +365,8 @@ class Database {
 
     // Feature#6 sort by id (ascending)
     void sortByIdAsc() {
+        auto start = chrono::steady_clock::now();
+
         // if data is empty, print error message
         if (getCurrentSize() == 0) {
             cout << "\nEmpty data cannot be sorted" << endl;
@@ -383,10 +385,18 @@ class Database {
 
             employee[j + 1] = temp;
         }
+
+                // show time complexity
+        auto end = chrono::steady_clock::now();
+        auto diff = end - start;
+        cout << "\nSorting by id (ascending) took "
+            << chrono::duration<double, milli>(diff).count() << " ms" << endl;
     }
 
     // Feature#6 sort by id (descending)
     void sortByIdDesc() {
+        auto start = chrono::steady_clock::now();
+
         // if data is empty, print error message
         if (getCurrentSize() == 0) {
             cout << "\nEmpty data cannot be sorted" << endl;
@@ -405,6 +415,12 @@ class Database {
 
             employee[j + 1] = temp;
         }
+
+        // show time complexity
+        auto end = chrono::steady_clock::now();
+        auto diff = end - start;
+        cout << "\nSorting by id (descending) took "
+            << chrono::duration<double, milli>(diff).count() << " ms" << endl;
     }
 
     // destructor to avoid memory leak
@@ -486,11 +502,11 @@ int main() {
     database2.modifyData(27, "1515", "Kai", "male", "professor", 1);
     database2.printData();
 
-    // show time complexity
-    auto end = chrono::steady_clock::now();
-    auto diff = end - start;
-    cout << "\n"
-         << chrono::duration<double, milli>(diff).count() << " ms" << endl;
+    // // show time complexity
+    // auto end = chrono::steady_clock::now();
+    // auto diff = end - start;
+    // cout << "\n"
+    //      << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
     return 0;
 }
