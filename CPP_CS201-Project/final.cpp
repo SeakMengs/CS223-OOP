@@ -295,12 +295,6 @@ class Database {
         // if file name does not contain .csv extension, add it
         validateFileName(fileName);
 
-        // if file does not exist, print error message
-        if (!ifstream(fileName)) {
-            cout << "\nFile " << fileName << " not found" << endl;
-            return;
-        }
-
         // show user we overwrite their database if database is not empty
         if (getCurrentSize() != 0) {
             cout << "\nDatabase is not empty, we are overwriting your existing database" << endl;
@@ -489,7 +483,7 @@ int main() {
     database2.sortByIdDesc();
     database2.printData();
 
-    database2.save("employee_detail.csv");
+    database2.save("employee_detail");
     // database2.save("employee_detail!@#$%&^&*(*())");
 
     // load data from csv file to database2 and print it again to show we
@@ -498,6 +492,7 @@ int main() {
             "database2"
          << endl;
     database2.load("employee_detail");
+    // database2.load("dkfkdamssk");
     database2.push_back(50, "1516", "Tom", "male", "actor");
     database2.modifyData(27, "1515", "Kai", "male", "professor", 1);
     database2.printData();
